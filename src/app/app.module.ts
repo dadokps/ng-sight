@@ -19,6 +19,7 @@ import { ServerComponent } from './server/server.component';
 // Services
 import { SalesDataService } from './services/sales-data.service';
 import { ServerService } from './services/server.service';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ServerService } from './services/server.service';
     BarChartComponent,
     LineChartComponent,
     PieChartComponent,
-    ServerComponent
+    ServerComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
