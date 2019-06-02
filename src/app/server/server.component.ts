@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ServerMessage } from '../shared/server-message';
 import { Server } from '../shared/server';
 
 @Component({
@@ -14,7 +15,9 @@ export class ServerComponent implements OnInit {
   buttonText: string;
   serverStatus: string;
   isLoading: boolean;
+
   @Input() serverInput: Server;
+  @Output() serverAction = new EventEmitter<ServerMessage>();
 
   ngOnInit() {
     this.setServerStatus(this.serverInput.isOnline);
@@ -44,8 +47,22 @@ export class ServerComponent implements OnInit {
   sendServerAction(isOnline: boolean) {
     console.log('sendServerAction called!');
     this.makeLoading();
-    //const payload = this.buildPayload(isOnline);
-    //this.serverAction.emit(payload);
+    const payload = this.buildPayload(isOnline);
+    this.serverAction.emit(payload);
   }
 
+  buildPayload(isOnline: boolean): ServerMessage {
+    if (isOnline) {
+      return {
+        id: this.serverInput.id,
+        payload: 'deactivate'
+      };
+    } else {
+      return {
+        id: this.serverInput.id,
+        payload: 'activate'
+      };
+    }
+  }
 }
+

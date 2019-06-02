@@ -5,6 +5,7 @@ import { ServerMessage } from '../shared/server-message';
 import { Server } from '../shared/server';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
@@ -25,7 +26,7 @@ export class ServerService {
   headers: Headers;
 
   getServers(): Observable<Server[]> {
-    return this._http.get('http://localhost:5000/api/server')
+    return this._http.get(environment.api + 'server')
     .map(res => res.json())
     .catch(this.handleError);
   }
@@ -39,7 +40,7 @@ export class ServerService {
   }
 
   handleServerMessage(msg: ServerMessage): Observable<Response> {
-    const url = 'http://localhost:5000/api/server/' + msg.id;
+    const url = environment.api + 'server/' + msg.id;
     return this._http.put(url, msg, this.options).map(res => res.json());
   }
 
